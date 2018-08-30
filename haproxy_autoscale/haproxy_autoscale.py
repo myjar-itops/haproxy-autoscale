@@ -64,12 +64,11 @@ def get_running_instances(access_key=None, secret_key=None, security_group=None,
             if safe_mode:
                 logging.error('Safe mode enabled. No new haproxy cfg is generated. Exit now.')
                 exit(1)
-
         if running_instances:
             for instance in running_instances:
                 instances_all_regions_list.append(instance)
 
-    return instances_all_regions_list
+    return sorted(instances_all_regions_list)
 
 
 def exists_empty_security_group(instances):
