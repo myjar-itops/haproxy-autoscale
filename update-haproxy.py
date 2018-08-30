@@ -53,7 +53,7 @@ def parse_args():
 
 def main(args):
     # Fetch a list of all the instances in these security groups.
-    instances= {}
+    instances = {}
     for security_group in args.security_group:
         logging.info('Getting instances for %s.', security_group)
         instances[security_group] = get_running_instances(access_key=args.access_key,
@@ -72,6 +72,8 @@ def main(args):
     # Otherwise just delete the temporary file and do nothing.
     logging.info('Comparing to existing configuration.')
     old_configuration = file_contents(filename=args.output)
+
+    sorted(instances)
 
     if new_configuration != old_configuration:
         logging.info('Existing configuration is outdated.')
@@ -94,7 +96,6 @@ def main(args):
 
 
 if __name__ == '__main__':
-    sys.stdout = open('/var/log/haproxy-autoscale-python-output.log', 'w')
     logging.getLogger()
     log_format = '%(asctime)s - %(levelname)s - %(message)s'
     logging.basicConfig(stream=sys.stdout, level=logging.INFO, format=log_format)
@@ -109,4 +110,3 @@ if __name__ == '__main__':
 
     else:  # standard, onetime run
         main(args)
-    sys.stdout.close()
