@@ -109,6 +109,10 @@ def generate_haproxy_config(template=None, instances=None):
     '''
     Generate an haproxy configuration based on the template and instances list.
     '''
+    instances=sorted(instances)
+    print("-+-+-+-+-+-+-+-+-")
+    print(instances)
+    print("-+-+-+-+-+-+-+-+-")
     return Template(filename=template).render(instances=instances)
 
 
