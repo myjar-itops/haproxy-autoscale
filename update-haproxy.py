@@ -56,12 +56,13 @@ def main(args):
     instances = {}
     for security_group in args.security_group:
         logging.info('Getting instances for %s.', security_group)
-        instances[security_group] = get_running_instances(access_key=args.access_key,
+        security_group_instances = get_running_instances(access_key=args.access_key,
                                                           secret_key=args.secret_key,
                                                           security_group=security_group,
                                                           region=args.region,
                                                           safe_mode=args.safe_mode,
                                                           delay=args.delay)
+        instances[security_group] = sorted(security_group_instances)
 
     # Generate the new config from the template.
     logging.info('Generating configuration for haproxy.')
@@ -72,8 +73,6 @@ def main(args):
     # Otherwise just delete the temporary file and do nothing.
     logging.info('Comparing to existing configuration.')
     old_configuration = file_contents(filename=args.output)
-
-    sorted(instances)
 
     if new_configuration != old_configuration:
         logging.info('Existing configuration is outdated.')
