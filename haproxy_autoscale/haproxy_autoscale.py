@@ -66,9 +66,13 @@ def get_running_instances(access_key=None, secret_key=None, security_group=None,
                 exit(1)
         if running_instances:
             for instance in running_instances:
+                logging.info(instance)
+                print(instance)
+                print("============================")
                 instances_all_regions_list.append(instance)
+        logging.info("**********************************")
+        logging.info(instances_all_regions_list)
     return instances_all_regions_list
-
 
 def exists_empty_security_group(instances):
     for sg, instances in instances.iteritems():
