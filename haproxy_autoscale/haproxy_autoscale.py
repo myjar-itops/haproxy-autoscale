@@ -109,10 +109,6 @@ def generate_haproxy_config(template=None, instances=None):
     '''
     Generate an haproxy configuration based on the template and instances list.
     '''
-    instances=sorted(instances)
-    print("-+-+-+-+-+-+-+-+-")
-    print(instances)
-    print("-+-+-+-+-+-+-+-+-")
     return Template(filename=template).render(instances=instances)
 
 
@@ -170,6 +166,11 @@ class Backends(object):
         for instance_list in instances_dict.values():
             for instance in instance_list:
                 self.all_instances.append(instance)
+
+	self.all_instances=sorted(self.all_instances)
+
+	print("show self.all_instances")
+	print(self.all_instances)
 
         self.all_backends = []
         self.included_instances = []
